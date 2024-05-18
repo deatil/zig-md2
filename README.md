@@ -1,18 +1,18 @@
 ## Zig-MD2 
 
-Zig-MD2 是一个使用 zig 语言编写的 MD2 库
+zig-md2 is a MD2 hash function lib.
 
 
-### 环境要求
+### Env
 
  - Zig >= 0.12
 
 
-### 开始使用
+### Get Starting
 
 ~~~zig
 const std = @import("std");
-const MD2 = @import("md2-zig").MD2;
+const MD2 = @import("zig-md2").MD2;
 
 pub fn main() !void {
     var out: [16]u8 = undefined;
@@ -27,11 +27,11 @@ pub fn main() !void {
 ~~~
 
 
-### 开源协议
+### LICENSE
 
-*  本软件包遵循 `Apache2` 开源协议发布，在保留本软件包版权的情况下提供个人及商业免费使用。
+*  The library LICENSE is `Apache2`, using the library need keep the LICENSE.
 
 
-### 版权
+### Copyright
 
-*  本软件包所属版权归 deatil(https://github.com/deatil) 所有。
+*  Copyright deatil(https://github.com/deatil).
