@@ -1,6 +1,6 @@
 ## Zig-MD2 
 
-zig-md2 is a MD2 hash function lib.
+zig-md2 is a MD2 hash function for Zig.
 
 
 ### Env
