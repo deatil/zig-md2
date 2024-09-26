@@ -5,7 +5,33 @@ zig-md2 is a MD2 hash function for Zig.
 
 ### Env
 
- - Zig >= 0.12
+ - Zig >= 0.13
+
+
+### Adding zig-md2 as a dependency
+
+Add the dependency to your project:
+
+```sh
+zig fetch --save=zig-md2 git+https://github.com/deatil/zig-md2#main
+```
+
+And the following to your `build.zig` file:
+
+```zig
+    const zig_md2 = b.dependency("zig-md2", .{
+        .target = target,
+        .optimize = optimize,
+    });
+    exe.root_module.addImport("zig-md2", zig_md2.module("zig-md2"));
+    exe.linkLibrary(zig_md2.artifact("zig-md2"));
+```
+
+The `zig-md2` structure can be imported in your application with:
+
+```zig
+const zig_md2 = @import("zig-md2");
+```
 
 
 ### Get Starting
