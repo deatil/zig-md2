@@ -5,7 +5,7 @@ zig-md2 is a MD2 hash function for Zig.
 
 ### Env
 
- - Zig >= 0.13
+ - Zig >= 0.14.0-dev.2851+b074fb7dd
 
 
 ### Adding zig-md2 as a dependency
@@ -16,15 +16,25 @@ Add the dependency to your project:
 zig fetch --save=zig-md2 git+https://github.com/deatil/zig-md2#main
 ```
 
+or use local path to add dependency at `build.zig.zon` file
+
+```zig
+.{
+    .dependencies = .{
+        .@"zig-md2" = .{
+            .path = "./lib/zig-md2",
+        },
+        ...
+    },
+    ...
+}
+```
+
 And the following to your `build.zig` file:
 
 ```zig
-    const zig_md2 = b.dependency("zig-md2", .{
-        .target = target,
-        .optimize = optimize,
-    });
-    exe.root_module.addImport("zig-md2", zig_md2.module("zig-md2"));
-    exe.linkLibrary(zig_md2.artifact("zig-md2"));
+    const zig_md2_dep = b.dependency("zig-md2", .{});
+    exe.root_module.addImport("zig-md2", zig_md2_dep.module("zig-md2"));
 ```
 
 The `zig-md2` structure can be imported in your application with:
@@ -43,12 +53,12 @@ const MD2 = @import("zig-md2").MD2;
 pub fn main() !void {
     var out: [16]u8 = undefined;
     
-    h = MD2.init(.{});
+    var h = MD2.init(.{});
     h.update("abc");
     h.final(out[0..]);
     
     // output: da853b0d3f88d99b30283a69e6ded6bb
-    std.debug.print("output: {s}\n", .{out});
+    std.debug.print("output: {x}\n", .{out});
 }
 ~~~
 
