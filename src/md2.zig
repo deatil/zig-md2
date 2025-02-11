@@ -96,6 +96,12 @@ pub const MD2 = struct {
         @memcpy(out[0..digest_length], d.s[0..digest_length]);
     }
 
+    pub fn finalResult(d: *Self) [digest_length]u8 {
+        var result: [digest_length]u8 = undefined;
+        d.final(&result);
+        return result;
+    }
+
     fn round(d: *Self, b: *const [16]u8) void {
         var t: usize = 0;
         var i: usize = 0;
@@ -125,6 +131,19 @@ pub const MD2 = struct {
             t = d.digest[i];
         }
     }
+
+    pub const Error = error{};
+    pub const Writer = std.io.Writer(*Self, Error, write);
+
+    fn write(self: *Self, bytes: []const u8) Error!usize {
+        self.update(bytes);
+        return bytes.len;
+    }
+
+    pub fn writer(self: *Self) Writer {
+        return .{ .context = self };
+    }
+
 };
 
 // Hash using the specified hasher `H` asserting `expected == H(input)`.
@@ -173,6 +192,24 @@ test "streaming" {
     h.update("c");
     h.final(out[0..]);
 
+    try assertEqual("da853b0d3f88d99b30283a69e6ded6bb", out[0..]);
+}
+
+test "finalResult" {
+    var h = MD2.init(.{});
+    var out = h.finalResult();
+    try assertEqual("8350e5a3e24c153df2275c9f80692773", out[0..]);
+
+    h = MD2.init(.{});
+    h.update("abc");
+    out = h.finalResult();
+    try assertEqual("da853b0d3f88d99b30283a69e6ded6bb", out[0..]);
+}
+
+test "writer" {
+    var h = MD2.init(.{});
+    try h.writer().print("{s}", .{"abc"});
+    const out = h.finalResult();
     try assertEqual("da853b0d3f88d99b30283a69e6ded6bb", out[0..]);
 }
 
