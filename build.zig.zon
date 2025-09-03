@@ -1,7 +1,7 @@
 .{
     .name = .zig_md2,
     .description = "A MD2 hash function.",
-    .version = "1.1.0",
+    .version = "1.1.1",
     .fingerprint = 0xcbba1d7056dc871c,
     .minimum_zig_version = "0.15.1",
     .paths = .{

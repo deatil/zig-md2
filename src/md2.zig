@@ -50,6 +50,9 @@ pub const MD2 = struct {
         @memset(self.buf[0..], 0);
         @memset(self.digest[0..], 0);
 
+        self.buf_len = 0;
+        self.total_len = 0;
+
         return self;
     }
 
