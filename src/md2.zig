@@ -135,18 +135,6 @@ pub const MD2 = struct {
             t = d.digest[i];
         }
     }
-
-    pub const Error = error{};
-    pub const Writer = std.io.GenericWriter(*Self, Error, write);
-
-    fn write(self: *Self, bytes: []const u8) Error!usize {
-        self.update(bytes);
-        return bytes.len;
-    }
-
-    pub fn writer(self: *Self) Writer {
-        return .{ .context = self };
-    }
 };
 
 // Hash using the specified hasher `H` asserting `expected == H(input)`.
@@ -206,13 +194,6 @@ test "finalResult" {
     h = MD2.init(.{});
     h.update("abc");
     out = h.finalResult();
-    try assertEqual("da853b0d3f88d99b30283a69e6ded6bb", out[0..]);
-}
-
-test "writer" {
-    var h = MD2.init(.{});
-    try h.writer().print("{s}", .{"abc"});
-    const out = h.finalResult();
     try assertEqual("da853b0d3f88d99b30283a69e6ded6bb", out[0..]);
 }
 
