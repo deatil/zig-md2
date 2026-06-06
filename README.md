@@ -5,7 +5,7 @@ zig-md2 is a MD2 hash function for Zig.
 
 ### Env
 
- - Zig >= 0.15.1
+ - Zig >= 0.16.0
 
 
 ### Adding zig-md2 as a dependency
@@ -50,7 +50,9 @@ const zig_md2 = @import("zig-md2");
 const std = @import("std");
 const MD2 = @import("zig-md2").MD2;
 
-pub fn main() !void {
+pub fn main(init: std.process.Init) !void {
+    _ = init;
+
     var out: [16]u8 = undefined;
     
     var h = MD2.init(.{});
