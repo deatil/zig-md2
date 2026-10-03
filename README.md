@@ -5,7 +5,7 @@ zig-md2 is a MD2 hash function for Zig.
 
 ### Env
 
- - Zig >= 0.16.0
+ - Zig >= 0.17.0
 
 
 ### Adding zig-md2 as a dependency

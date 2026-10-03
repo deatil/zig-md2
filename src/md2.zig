@@ -198,7 +198,7 @@ test "finalResult" {
 }
 
 test "aligned final" {
-    var block = [_]u8{0} ** MD2.block_length;
+    const block: [MD2.block_length]u8 = @splat(0);
     var out: [MD2.digest_length]u8 = undefined;
 
     var h = MD2.init(.{});
